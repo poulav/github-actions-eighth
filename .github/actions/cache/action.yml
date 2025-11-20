@@ -1,16 +1,16 @@
 name: Cache Dependencies
 description: Cache node_modules directory to speed up workflows
-runs:
-  using: 'Composite'
-  inputs:
+inputs:
     usecache:
       description: 'Indicates if cache was used'
       required: false
       default: 'true'
-  outputs:
-    cacheused:
-      description: 'Indicates if cache was used'
-      value: ${{ steps.install-deps.outputs.cacheused }} || ${{ inputs.usecache }}
+outputs:
+  cacheused:
+    description: 'Indicates if cache was used'
+    value: ${{ steps.install-deps.outputs.cacheused }} || ${{ inputs.usecache }}
+runs:
+  using: "composite"  
   steps:
     - name: Cache node_modules
       uses: actions/cache@v3
