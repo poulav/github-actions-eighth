@@ -1,0 +1,26 @@
+name: Cache Dependencies
+description: Cache node_modules directory to speed up workflows
+runs:
+  using: 'Composite'
+  inputs:
+    usecache:
+      description: 'Indicates if cache was used'
+      required: false
+      default: 'true'
+  outputs:
+    cacheused:
+      description: 'Indicates if cache was used'
+      value: ${{ steps.install-deps.outputs.cacheused }} || ${{ inputs.usecache }}
+  steps:
+    - name: Cache node_modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+    - name: Install dependencies
+      id: install-deps
+      if: steps.cache.outputs.cache-hit != 'true' && inputs.usecache != 'true'
+      run: |
+        npm ci
+        echo "cacheused=false" >> $GITHUB_OUTPUT
+      shell: bash
