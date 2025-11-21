@@ -8,7 +8,7 @@ inputs:
 outputs:
   cacheused:
     description: 'Indicates if cache was used'
-    value: ${{ steps.install-deps.outputs.cacheused }} || ${{ inputs.usecache }}
+    value: ${{ steps.install-deps.outputs.cacheused }}
 runs:
   using: "composite"  
   steps:
