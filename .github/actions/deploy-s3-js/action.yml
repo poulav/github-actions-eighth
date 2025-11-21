@@ -1,0 +1,5 @@
+name: 'Javascript Action'
+description: 'This is an example javascript action for practice'
+runs:
+  using: 'Node20'
+  main: 'main.js'
